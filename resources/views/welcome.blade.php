@@ -84,8 +84,7 @@
                         <em>Function</em>
                     </h5>
                     <hr class="hr-primary w-70 ml-0 ml-md-auto mr-md-0 mb-3">
-                    <p>Aptent dolore enim facilisi humo magna melior nisl occuro. Ad os sed utinam. Accumsan autem brevitas esse exerci ludus ratis.</p>
-                    <p>Adipiscing nimis sed tego turpis. Abico plstf? quadrum qui singularis te.</p>
+                    <p>Aptent dolore edsafasdfasdfquadrum qui singularis te.</p>
                 </div>
             </div>
             <div class="row mb-5">
@@ -100,8 +99,8 @@
                         <em>Professional napper</em>
                     </h5>
                     <hr class="hr-primary w-70 ml-0 mb-3">
-                    <p>Commoveo gilvus iaceo nutus pagus tincidunt. Eligo nutus proprius saluto vulputate. Brevitas eligo et fere quadrum quae ratis.</p>
-                    <p>Eum pecus quis. Accumsan genitus humo inhibeo ut vel. Augue bene enim gemino ideo ille luptatum os veniam venio.</p>
+                    <p>Commoveo gilvus iaceo nutus pagus tincidunt. Eligo Hallo? proprius saluto vulputate. Brevitas eligo et fere quadrum quae ratis.</p>
+                    <p>Eum pecus quis. Accumsan genitus humo inhibeo ut vel. dev bene enim gemino ideo ille luptatum os veniam venio.</p>
                 </div>
             </div>
         </div>
