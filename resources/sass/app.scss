@@ -1,0 +1,79 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+//Includes
+
+//Headers
+@import "header/header";
+@import "header/mobile/header";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+//@tailwind base;
+//
+//@tailwind components;
+//
+//@tailwind utilities;
+
+
+#app{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    max-width: 100%;
+}
+
+.compliment-3-btn{
+    background-color: $color-complement-3;
+    color: white;
+}
+.compliment-3-btn:hover{
+    background-color: $color-complement-2;
+    color: white;
+}
+
+
+.feature-bar{
+    background: $Notify-blue;
+    height: 175px;
+    max-height: 100%;
+    padding-top: 20px;
+}
+
+.feature-title{
+    color: #ffffff;
+}
+
+.feature{
+    background: orange;
+    height: 200px;
+    padding: 15px;
+}
+
+.padding-row-15{
+    padding-top: 15px;
+}
+
+.feature-list-title{
+    color: $Notify-blue;
+}
+
+.feature-inprogress{
+    background: $Notify-blue;
+}
+
+.list-group-item-action .feature-inprogress:hover {
+    background: $Notify-blue;
+    color: #ffffff;
+}
+
+.notifying-work{
+    font-weight: bold;
+    color: $Notify-blue;
+}
