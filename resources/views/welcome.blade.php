@@ -85,7 +85,7 @@
                     </h5>
                     <hr class="hr-primary w-70 ml-0 ml-md-auto mr-md-0 mb-3">
                     <p>Aptent dolore enim facilisi humo magna melior nisl occuro. Ad os sed utinam. Accumsan autem brevitas esse exerci ludus ratis.</p>
-                    <p>Adipiscing nimis sed tego turpis. Abico wtf? quadrum qui singularis te.</p>
+                    <p>Adipiscing nimis sed tego turpis. Abico plstf? quadrum qui singularis te.</p>
                 </div>
             </div>
             <div class="row mb-5">
