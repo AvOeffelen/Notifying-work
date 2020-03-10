@@ -5,11 +5,13 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
+@import 'theme/variables';
 
-//Headers
+// Base theme styles
+@import 'theme/base';
+
+// Headers
 @import "header/header";
-@import "header/mobile/header";
 
 //@tailwind base;
 //
