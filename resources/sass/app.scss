@@ -10,7 +10,8 @@
 // Base theme styles
 @import 'theme/base';
 
-// Headers
+//Headers
+@import "dashboard";
 @import "header/header";
 
 //@tailwind base;

@@ -49650,7 +49650,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\n\r\n@import \"dashboard\";\r\n^\r\n      File to import not found or unreadable: dashboard.\r\n      in C:\\laragon\\www\\Notify-work\\resources\\sass\\app.scss (line 10, column 1)\n    at C:\\laragon\\www\\Notify-work\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at C:\\laragon\\www\\Notify-work\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\laragon\\www\\Notify-work\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\laragon\\www\\Notify-work\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.callback (C:\\laragon\\www\\Notify-work\\node_modules\\sass-loader\\dist\\index.js:89:7)\n    at Object.done [as callback] (C:\\laragon\\www\\Notify-work\\node_modules\\neo-async\\async.js:8067:18)\n    at options.error (C:\\laragon\\www\\Notify-work\\node_modules\\node-sass\\lib\\index.js:294:32)");
 
 /***/ }),
 
