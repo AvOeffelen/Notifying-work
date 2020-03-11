@@ -25,3 +25,5 @@ Route::get('/pushGuest','PushController@pushToGuest')->name('push.guest');
 
 //store a push subscriber.
 Route::post('/push','PushController@store');
+
+Route::get('/get-started','GetStartedController@index')->name('get.started.index');
