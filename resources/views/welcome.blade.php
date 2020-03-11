@@ -1,65 +1,90 @@
 @extends('layouts.home-layout')
 
 @section('content')
-    <section class="features">
-        <div class="row feature-bar">
-            <div class="col-md-12">
-                <div class=" text-center">
-                    <h1 class="feature-title display-3">Development has now started!</h1>
-                    <h2 class="text-white">What features can you expect?</h2>
-                </div>
-            </div>
+<section class="intro-text">
+  <div class="container container--small">
+    <div class="intro-text__row">
+      <div class="intro-text__col">
+        <div class="intro-text__content">
+          <h1><strong>Notify</strong> your employees via multiple channels.</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi bibendum et nulla non auctor. Duis libero velit, pulvinar sed mi porta, sagittis rhoncus felis. Suspendisse potenti. Suspendisse elementum eros metus, eget dapibus libero ultrices eu. Pellentesque sed elementum neque, id vestibulum nulla. Morbi vitae eros dui.</p>
         </div>
-        <div class="row padding-row-15 pr-5">
-            <div class="col-md-5 pt-5">
-                <div class="text-center header-image">
-                    <img src="https://picsum.photos/450/350">
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="list-group">
-                    <div class="list-group-item  flex-column align-items-start feature-inprogress text-white">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Push Notifications</h5>
-                            <small>In progress</small>
-                        </div>
-                        <p class="mb-1">This feature is perfect if you quickly want to notify someone.</p>
-                        <small>We expect to beta test soon.</small>
-                    </div>
-                    <div class="list-group-item flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Email Notifications</h5>
-                            <small>Awaiting start development</small>
-                        </div>
-                        <p class="mb-1">This feature is perfect if you quickly want to notify someone.</p>
-                    </div>
-                    <div class="list-group-item flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">SMS Notifications</h5>
-                            <small>Awaiting start development</small>
-                        </div>
-                        <p class="mb-1">This feature is perfect if you quickly want to notify someone.</p>
-                    </div>
-                    <div class="list-group-item flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">WhatsApp Notifications</h5>
-                            <small>We expect to start this development in Q4 2020</small>
-                        </div>
-                        <p class="mb-1">This feature is perfect if you quickly want to notify someone.</p>
-                        <small>We expect to start this development in Q4 2020</small>
-                    </div>
-                    <div class="list-group-item flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Slack Notifications</h5>
-                            <small>We expect to start this development in Q4 2020</small>
-                        </div>
-                        <p class="mb-1">This feature is perfect if you quickly want to notify someone.</p>
-                        <small>We expect to start this development in Q4 2020</small>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="intro-text__col">
+        <div class="intro-text__image">
+          <img src="https://picsum.photos/600/350" alt="">
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature-bar">
+    <div class="container container--small feature-bar__container">
+      <h1 class="feature-bar__title">Development has <strong>now</strong> started!</h1>
+      <h2 class="feature-bar__subtitle">What features can you expect?</h2>
+    </div>
+  </div>
+  <div class="feature-content">
+    <div class="container">
+      <div class="feature-content__row">
+        <div class="feature-content__col">
+          <div class="feature-content__image">
+            <img src="https://picsum.photos/600/350" alt="">
+          </div>
+        </div>
+        <div class="feature-content__col">
+          <div class="feature-content__content">
+            <div class="feature-content__list-group">
+              <ul class="feature-content__list">
+                <li class="is-active">
+                  <div>
+                    <h3><i class="far fa-paper-plane"></i>Push Notifications</h3>
+                    <div class="feature-content__list-label"><small>In progress</small></div>
+                  </div>
+                  <p>This feature is perfect if you quickly want to notify someone.</p>
+                  <p><small>We expect to beta test soon.</small></p>
+                </li>
+                <li>
+                  <div>
+                    <h3>Email Notifications</h3>
+                    <div class="feature-content__list-label"><small>Awaiting start development</small></div>
+                  </div>
+                  <p>This feature is perfect if you quickly want to notify someone.</p>
+                </li>
+                <li>
+                  <div>
+                    <h3>SMS Notifications</h3>
+                    <div class="feature-content__list-label"><small>Awaiting start development</small></div>
+                  </div>
+                  <p>This feature is perfect if you quickly want to notify someone.</p>
+                </li>
+                <li>
+                  <div>
+                    <h3>WhatsApp Notifications</h3>
+                    <div class="feature-content__list-label"><small>We expect to start this development in Q4 2020</small></div>
+                  </div>
+                  <p>This feature is perfect if you quickly want to notify someone.</p>
+                  <p><small>We expect to start this development in Q4 2020</small></p>
+                </li>
+                <li>
+                  <div>
+                    <h3>Slack Notifications</h3>
+                    <div class="feature-content__list-label"><small>We expect to start this development in Q4 2020</small></div>
+                  </div>
+                  <p>This feature is perfect if you quickly want to notify someone.</p>
+                  <p><small>We expect to start this development in Q4 2020</small></p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <section>
         <div class="row padding-row-15 p-5">
             <div class="col-md-12">
@@ -105,4 +130,8 @@
             </div>
         </div>
     </section>
+
+  <!-- EIND CONTENT -->
+  </div>
+    <footer style="background: red;">test</footer>
 @endsection

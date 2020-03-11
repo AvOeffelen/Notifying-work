@@ -1,17 +1,17 @@
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
+@import 'theme/variables';
 
-//Includes
+// Base theme styles
+@import 'theme/base';
 
-//Headers
+// Headers
 @import "header/header";
-@import "header/mobile/header";
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
 
 //@tailwind base;
 //
@@ -20,13 +20,35 @@
 //@tailwind utilities;
 
 
-#app{
-    width: 100%;
-    height: 100%;
+#app {
+
 }
 
-body{
-    max-width: 100%;
+html {
+  font-family: $font-family-primary;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  overflow-x: hidden;
+}
+
+.content-area {
+    padding-top: 8rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 142rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--small {
+    max-width: 98rem;
+  }
 }
 
 .compliment-3-btn{
@@ -36,24 +58,6 @@ body{
 .compliment-3-btn:hover{
     background-color: $color-complement-2;
     color: white;
-}
-
-
-.feature-bar{
-    background: $Notify-blue;
-    height: 175px;
-    max-height: 100%;
-    padding-top: 20px;
-}
-
-.feature-title{
-    color: #ffffff;
-}
-
-.feature{
-    background: orange;
-    height: 200px;
-    padding: 15px;
 }
 
 .padding-row-15{
