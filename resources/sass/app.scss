@@ -7,11 +7,13 @@
 // Variables
 @import 'theme/variables';
 
-// Base theme styles
+// Theme styles
 @import 'theme/base';
+@import "theme/header";
+@import "theme/footer";
+@import 'theme/features';
+@import 'theme/testimonials';
 
-// Headers
-@import "header/header";
 
 //@tailwind base;
 //
@@ -24,32 +26,6 @@
 
 }
 
-html {
-  font-family: $font-family-primary;
-  font-size: 62.5%;
-}
-
-body {
-  font-size: 1.6rem;
-  overflow-x: hidden;
-}
-
-.content-area {
-    padding-top: 8rem;
-}
-
-.container {
-  width: 100%;
-  max-width: 142rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  margin-left: auto;
-  margin-right: auto;
-
-  &--small {
-    max-width: 98rem;
-  }
-}
 
 .compliment-3-btn{
     background-color: $color-complement-3;

@@ -120,128 +120,15 @@
 
   &__image {
     padding-left: 4rem;
+    max-width: 30rem;
+    margin-top: -5rem;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 
     img {
-      max-width: 90%;
       margin: 0 auto;
       display: block;
-    }
-  }
-}
-
-.features {
-
-  .feature-bar {
-    background-color: $color-primary;
-    margin-bottom: 6rem;
-
-    &__container {
-      text-align: center;
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-
-    &__title,
-    &__subtitle {
-      color: $color-white;
-    }
-
-    &__title {
-      font-size: 4.5rem;
-    }
-
-    &__subtitle {
-      font-size: 2.5rem;
-    }
-  }
-
-  .feature-content {
-
-    &__row {
-      display: flex;
-      flex-direction: row;
-    }
-
-    &__col {
-      width: 50%;
-      display: flex;
-      align-items: center;
-
-      &:first-of-type {
-        width: 40%;
-      }
-
-      &:nth-of-type(2) {
-        width: 60%;
-      }
-    }
-
-    &__image {
-      padding-right: 4rem;
-    }
-
-    &__content {
-      width: 100%;
-    }
-
-    &__list-group {
-
-    }
-
-    &__list {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-
-      li {
-        border: $border;
-        border-top: 0;
-        padding: 1rem 1.5rem;
-        position: relative;
-        flex: 1;
-
-        &:first-of-type {
-          border-top: $border;
-          border-radius: 0.5rem 0.5rem 0 0;
-        }
-
-        &:last-of-type {
-          border-radius: 0 0 0.5rem 0.5rem;
-        }
-
-        h3 {
-          font-size: 1.5rem;
-          font-weight: 700;
-        }
-
-        p {
-          line-height: 1.1;
-          font-size: 1.4rem;
-
-          small {
-            font-size: 1.2rem;
-          }
-
-          &:last-of-type {
-            margin-bottom: 0;
-          }
-        }
-
-        &.is-active {
-          border: $border-primary;
-          background-color: $color-primary;
-          color: $color-white;
-        }
-      }
-    }
-
-    &__list-label {
-      position: absolute;
-      top: 0.5em;
-      right: 1rem;
-      line-height: 1;
     }
   }
 }
