@@ -16,6 +16,12 @@ yarn-error.log
 *.example
 .idea/
 
-public/
+package-lock.json
 
 package-lock.json
+
+public/js/app.js
+
+public/mix-manifest.json
+
+public/fonts/vendor/\@fortawesome/fontawesome-free/
