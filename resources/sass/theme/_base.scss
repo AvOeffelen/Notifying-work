@@ -1,0 +1,70 @@
+html {
+  font-family: $font-family-primary;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: $font-size-base;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: $font-family-primary;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.8rem;
+}
+
+h5 {
+  font-size: $font-size-base;
+}
+
+p {
+  font-family: $font-family-primary;
+  line-height: 1.6;
+  font-size: $font-size-base;
+}
+
+a {
+  transition: 200ms;
+}
+
+img {
+  max-width: 100%;
+}
+
+.content-area {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 142rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--small {
+    max-width: 98rem;
+  }
+
+  &--extrasmall {
+    max-width: 72rem;
+  }
+}
