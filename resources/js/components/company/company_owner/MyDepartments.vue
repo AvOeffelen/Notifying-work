@@ -85,15 +85,19 @@
                     <span>Department name</span>
                 </b-col>
                 <b-col md="6">
-
+                    <b-form-input
+                            id="input-2"
+                            v-model="newDepartment.department_name"
+                            placeholder="Enter department name"
+                    ></b-form-input>
                 </b-col>
             </b-row>
-            <b-row>
+            <b-row class="padding-top-15">
                 <b-col md="4">
                     <span>Department manager</span>
                 </b-col>
                 <b-col md="6">
-                    <multiselect v-model="newDepartment.value" :options="options"></multiselect>
+                    <multiselect v-model="newDepartment.manager" :options="employees"  placeholder="Select employee as manager" label="name" track-by="name"></multiselect>
                 </b-col>
             </b-row>
             <template v-slot:modal-footer>
@@ -120,10 +124,10 @@
                 selectedId:'',
                 selectedIndex:'',
                 createModal:false,
-                employees:'',
-                options:['options','test','dddddd'],
+                employees:[],
                 newDepartment:{
-                    value:null
+                    manager:null,
+                    department_name:'',
                 }
             };
         },
@@ -220,5 +224,7 @@
 </script>
 
 <style>
-
+    .padding-top-15{
+        padding-top: 15px;
+    }
 </style>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Company;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -40,8 +41,8 @@ class CompanyController extends Controller
 
     public function getAllEmployees(Company $company)
     {
-        $users = User::all()->where('company_id',$company->id);
+        $users = DB::table('users')->where('company_id',$company->id)->select('name','id')->get();
 
-        return $users->toJson();
+        return $users->toArray();
     }
 }
