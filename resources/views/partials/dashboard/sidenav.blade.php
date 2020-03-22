@@ -37,4 +37,12 @@
             <i class="fas fa-fw fa-user"></i>
             <span>Employees</span></a>
     </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('my.company')}}">
+                <i class="fas fa-fw fa-building"></i>
+                <span>My company</span></a>
+
+        </li>
+
 </ul>

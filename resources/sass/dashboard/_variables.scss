@@ -22,6 +22,7 @@ $barabaz-red: #a51c4b;
 $button-blue: #0c72f0;
 $light-blue: #1e60b0;
 $dark-blue:#06418a;
+$Notify-blue : #1e60b0;
 
 // Spacing Variables
 // Change below variable if the height of the navbar changes
@@ -81,7 +82,7 @@ $theme-colors: map-merge(
             'light': $light,
             'dark': $dark,
             'barabaz-red':$barabaz-red,
-            'button-blue':$button-blue
+            'notify-blue':$Notify-blue
         ),
         $theme-colors
 );
