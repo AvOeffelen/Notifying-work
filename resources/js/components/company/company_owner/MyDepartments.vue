@@ -87,7 +87,7 @@
                 <b-col md="6">
                     <b-form-input
                             id="input-2"
-                            v-model="newDepartment.department_name"
+                            v-model="newDepartment.name"
                             placeholder="Enter department name"
                     ></b-form-input>
                 </b-col>
@@ -97,7 +97,8 @@
                     <span>Department manager</span>
                 </b-col>
                 <b-col md="6">
-                    <multiselect v-model="newDepartment.manager" :options="employees"  placeholder="Select employee as manager" label="name" track-by="name"></multiselect>
+                    <!--<multiselect v-model="manager" :options="employees"  placeholder="Select employee as manager" label="name"></multiselect>-->
+                    <multiselect v-model="newDepartment.manager" :options="employees"  placeholder="Select employee as manager" :preselect-first="true" label="name" track-by="name"></multiselect>
                 </b-col>
             </b-row>
             <template v-slot:modal-footer>
@@ -126,9 +127,10 @@
                 createModal:false,
                 employees:[],
                 newDepartment:{
-                    manager:null,
-                    department_name:'',
-                }
+                    manager:[],
+                    name:'',
+                },
+                errors:[],
             };
         },
         created() {
@@ -145,7 +147,6 @@
                 axios.get(url)
                     .then(response => {
                         this.employees = response.data;
-                        console.log('employees',this.employees);
                     })
                     .catch(error => {
                         console.log(error);
@@ -155,10 +156,23 @@
                     });
             },
             createDepartment(){
-
+                let url = variables.post_department;
+                // if(this.newDepartment.manager != null){
+                    axios.post(url,this.newDepartment)
+                        .then(response => {
+                            console.log("posted no errors")
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            if (error.response.status === 422) {
+                                this.errors = error.response.data.errors;
+                            }
+                        });
+                // } else {
+                //
+                // }
             },
             openCreateDepartmentModal(){
-                console.log("company",this.company);
                 this.createModal = !this.createModal;
             },
             finishEditing(departmentEdit,department){

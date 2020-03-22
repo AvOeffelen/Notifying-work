@@ -28,4 +28,20 @@ class DepartmentController extends Controller
 
         return;
     }
+
+    public function create(Request $request)
+    {
+
+
+        $messages = [
+            'manager.required' => 'Please select a manager.'
+        ];
+        $validatedData = $request->validate([
+            'name' => 'required|min:1|max:15',
+            'manager' => 'required'
+        ],$messages);
+
+
+        return;
+    }
 }

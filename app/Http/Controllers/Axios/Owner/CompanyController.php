@@ -43,6 +43,6 @@ class CompanyController extends Controller
     {
         $users = DB::table('users')->where('company_id',$company->id)->select('name','id')->get();
 
-        return $users->toArray();
+        return $users->toJson();
     }
 }

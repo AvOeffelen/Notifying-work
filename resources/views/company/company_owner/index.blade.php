@@ -15,6 +15,7 @@
             get_department: '{{url('axios/owner/company/{0}/get/departments')}}',
             delete_department: '{{url('axios/owner/department/{0}/delete')}}',
             edit_department: '{{url('axios/owner/department/{0}/edit')}}',
+            post_department: '{{url('axios/owner/department/create')}}',
             edit_company: '{{url('axios/owner/company/{0}/update')}}',
             get_employees_for_company: '{{url('axios/owner/company/{0}/employees/get')}}',
         };
