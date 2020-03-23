@@ -41,8 +41,8 @@ class CompanyController extends Controller
 
     public function getAllEmployees(Company $company)
     {
-        $users = DB::table('users')->where('company_id',$company->id)->select('name','id')->get();
+        $employees = DB::table('users')->where('company_id',$company->id)->get();
 
-        return $users->toJson();
+        return $employees->toJson();
     }
 }

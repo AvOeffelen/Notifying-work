@@ -62,6 +62,16 @@ class DepartmentController extends Controller
         return $department;
     }
 
+    public function edit(Request $request,Department $department)
+    {
+
+        $department->name = $request->name;
+        $department->manager_user_id = $request['manager']['id'];
+        $department->update();
+
+        return $department->toJson();
+    }
+
     private function storeUserToDepartment($user,$department){
 
     }

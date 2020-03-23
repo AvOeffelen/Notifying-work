@@ -44,7 +44,7 @@
                                     </td>
                                     <td>
                                         <span v-if="isEditing == false">{{departmentToBeManaged.manager.name}}</span>
-                                        <multiselect v-else v-model="tempDepartment.manager" :options="this.employees"  placeholder="Select employee as manager" :preselect-first="true" label="name" track-by="name"></multiselect>
+                                        <multiselect v-else v-model="departmentToBeManaged.manager" :options="this.employees"  placeholder="Select employee as manager" :preselect-first="true" label="name" track-by="name"></multiselect>
                                         <div class="invalid-feedback">
                                             <span v-if="errors.manager">{{errors.manager[0]}}</span>
                                         </div>
@@ -55,13 +55,22 @@
                                         <span>employee count</span>
                                     </td>
                                     <td>
-                                        <span v-if="isEditing == false">{{departmentToBeManaged.user_count}}</span>
+                                        <span>{{departmentToBeManaged.user_count}}</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </b-col>
                     <b-col md="2"></b-col>
+                </b-row>
+                <b-row class="padding-row-top padding-row-bottom">
+                    <b-col md="12">
+                        <div class="text-center">
+                            <b-button size="sm" variant="notify-blue" @click="startEditing" v-if="isEditing == false">edit</b-button>
+                            <b-button size="sm" variant="danger" @click="cancelEditing" v-if="isEditing == true">cancel</b-button>
+                            <b-button size="sm" variant="success" @click="finishEditing" v-if="isEditing == true">save</b-button>
+                        </div>
+                    </b-col>
                 </b-row>
                 <b-row>
                     <b-col md="12">
@@ -70,7 +79,6 @@
                 </b-row>
                 <b-row>
                     <b-col md="12">
-                        <b-button size="sm" variant="notify-blue" @click="startEditing">edit department</b-button>
                         <b-button size="sm" variant="notify-blue">employee management</b-button>
                         <b-button size="sm" variant="danger">delete department</b-button>
                     </b-col>
@@ -91,7 +99,6 @@
         data() {
             return {
                 isEditing:false,
-                tempDepartment:null,
                 errors:[]
             };
         },
@@ -107,11 +114,34 @@
                 this._beforeEditingCache = this.departmentToBeManaged;
                 this._beforeEditingCache = Object.assign({},this.departmentToBeManaged);
                 this.tempDepartment = this.departmentToBeManaged;
+            },
+            cancelEditing(){
+                this.isEditing = !this.isEditing;
+                Object.assign(this.departmentToBeManaged, this._beforeEditingCache);
+                this._beforeEditingCache = null;
+            },
+            finishEditing(){
+                let url = variables.edit_department.format(this.departmentToBeManaged.id);
+                axios.put(url,this.departmentToBeManaged)
+                    .then(response => {
+                        this.isEditing = !this.isEditing;
+
+                    })
+                    .catch(error => {
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors;
+                        }
+                    });
             }
         },
     }
 </script>
 
-<style scoped>
-
+<style>
+    .padding-row-top{
+        padding-top:15px;
+    }
+    .padding-row-bottom{
+        padding-bottom: 15px;
+    }
 </style>

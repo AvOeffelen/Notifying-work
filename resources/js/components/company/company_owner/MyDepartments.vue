@@ -171,6 +171,7 @@
                     });
             },
             manageDepartment(test){
+                this.fetchAllEmployees();
                 this.openManageModal = !this.openManageModal;
                 this.departmentToBeManaged = test;
             },
