@@ -9,6 +9,7 @@ class Department extends Model
 {
     protected $table = 'department';
 
+    protected $fillable = ['name','company_id','manager_user_id'];
 
     public function Company()
     {

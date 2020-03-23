@@ -50,12 +50,12 @@
                                 <td>{{department.user_count}}</td>
                                 <td class="text-right">
                                     <b-dropdown size="sm" id="dropdown-1" text="actions" variant="notify-blue">
-                                        <b-dropdown-item>manage department &nbsp;<i class="fa fa-question-circle" id="manage-my-department"></i></b-dropdown-item>
+                                        <b-dropdown-item v-on:click="manageDepartment(department)">manage department &nbsp<i class="fa fa-question-circle" :id="`manage-my-department-` + index"></i></b-dropdown-item>
                                         <b-dropdown-item>show employees</b-dropdown-item>
                                         <b-dropdown-item variant="danger" v-on:click="showConfirmModal(department.id,index)">remove department</b-dropdown-item>
                                     </b-dropdown>
                                 </td>
-                                <b-popover target="manage-my-department" triggers="hover" placement="top">
+                                <b-popover :target="`manage-my-department-` + index" triggers="hover" placement="top">
                                     <template v-slot:title>Manage department?</template>
                                     You can do all sorts of things in this feature: <i>Change the name, add employees, change the manager & delete it</i>.
                                 </b-popover>
@@ -79,27 +79,38 @@
                 </div>
             </template>
         </b-modal>
+<!--        Create department modal-->
         <b-modal title="Create department" id="confirmModalTest" v-model="createModal" size="lg">
             <b-row>
-                <b-col md="4">
+                <b-col md="2"></b-col>
+                <b-col md="3">
                     <span>Department name</span>
                 </b-col>
-                <b-col md="6">
+                <b-col md="5">
                     <b-form-input
                             id="input-2"
                             v-model="newDepartment.name"
                             placeholder="Enter department name"
                     ></b-form-input>
+                    <div class="invalid-feedback">
+                        <span v-if="errors.name">{{errors.name[0]}}</span>
+                    </div>
                 </b-col>
+                <b-col md="2"></b-col>
             </b-row>
             <b-row class="padding-top-15">
-                <b-col md="4">
+                <b-col md="2"></b-col>
+                <b-col md="3">
                     <span>Department manager</span>
                 </b-col>
-                <b-col md="6">
+                <b-col md="5">
                     <!--<multiselect v-model="manager" :options="employees"  placeholder="Select employee as manager" label="name"></multiselect>-->
                     <multiselect v-model="newDepartment.manager" :options="employees"  placeholder="Select employee as manager" :preselect-first="true" label="name" track-by="name"></multiselect>
+                    <div class="invalid-feedback">
+                        <span v-if="errors.manager">{{errors.manager[0]}}</span>
+                    </div>
                 </b-col>
+                <b-col md="2"></b-col>
             </b-row>
             <template v-slot:modal-footer>
                 <div class="text-right">
@@ -108,12 +119,15 @@
                 </div>
             </template>
         </b-modal>
+        <manage-department :manageMyDepartmentModal="openManageModal" :employees="employees" :departmentToBeManaged="departmentToBeManaged"></manage-department>
     </div>
 </template>
 
 <script>
+    import ManageDepartment from "./ManageDepartment";
     export default {
         name: "MyDepartments",
+        components: {ManageDepartment},
         props: [
             'company'
         ],
@@ -131,6 +145,8 @@
                     name:'',
                 },
                 errors:[],
+                openManageModal:false,
+                departmentToBeManaged:'',
             };
         },
         created() {
@@ -138,7 +154,6 @@
             //     this.getNotes();
             // }.bind(this),1500);
             this.fetchDepartments();
-            this.fetchAllEmployees();
         },
         methods: {
             fetchAllEmployees(){
@@ -155,25 +170,27 @@
                         // }
                     });
             },
+            manageDepartment(test){
+                this.openManageModal = !this.openManageModal;
+                this.departmentToBeManaged = test;
+            },
             createDepartment(){
                 let url = variables.post_department;
-                // if(this.newDepartment.manager != null){
-                    axios.post(url,this.newDepartment)
-                        .then(response => {
-                            console.log("posted no errors")
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            if (error.response.status === 422) {
-                                this.errors = error.response.data.errors;
-                            }
-                        });
-                // } else {
-                //
-                // }
+                axios.post(url,this.newDepartment)
+                    .then(response => {
+                        this.departments.push(response.data);
+                        this.createModal = !this.createModal;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors;
+                        }
+                    });
             },
             openCreateDepartmentModal(){
                 this.createModal = !this.createModal;
+                this.fetchAllEmployees();
             },
             finishEditing(departmentEdit,department){
                 let url = variables.edit_department.format(departmentEdit.id);
@@ -240,5 +257,9 @@
 <style>
     .padding-top-15{
         padding-top: 15px;
+    }
+
+    .multiselect__option--selected .multiselect__option--highlight{
+        background-color: $Notify-blue;
     }
 </style>

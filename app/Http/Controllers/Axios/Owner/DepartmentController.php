@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Axios\Owner;
 use App\Http\Controllers\Controller;
 use App\Model\Company;
 use App\Model\Department;
+use App\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Array_;
 
 class DepartmentController extends Controller
 {
@@ -37,11 +39,30 @@ class DepartmentController extends Controller
             'manager.required' => 'Please select a manager.'
         ];
         $validatedData = $request->validate([
-            'name' => 'required|min:1|max:15',
+            'name' => 'required|min:3|max:15',
             'manager' => 'required'
         ],$messages);
 
+        $department = $this->store($request->toArray());
 
-        return;
+        $department->User()->attach($request['manager']['id']);
+
+       $newDepartment = Department::with('Manager')->With('User')->withCount('User')->findOrFail($department->id);
+
+        return $newDepartment->toJson();
+    }
+
+    private function store(Array $data){
+        $department = Department::create([
+            'name' => $data['name'],
+            'company_id' => auth()->user()->Company->id,
+            'manager_user_id' => $data['manager']['id']
+        ]);
+
+        return $department;
+    }
+
+    private function storeUserToDepartment($user,$department){
+
     }
 }
