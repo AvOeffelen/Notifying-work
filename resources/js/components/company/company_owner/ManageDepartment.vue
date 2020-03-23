@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="manageMyDepartmentModal" size="xl" title="Manage department">
+        <b-modal v-model="manageMyDepartmentModal" size="xl" title="Manage department" ok="false" hide-footer="true">
 
                 <b-row>
                     <b-col md="12">
@@ -15,10 +15,11 @@
                 </b-row>
             <div class="text-center">
                 <b-row>
-                    <b-col md="2"></b-col>
-                    <b-col md="8">
-                        <table class="table table-borderless text-center">
-                            <tbody>
+                    <b-col md="4"></b-col>
+                    <b-col md="4">
+                        <div class="align-content-center">
+                            <table class="table table-borderless text-left">
+                                <tbody>
                                 <tr>
                                     <td>
                                         <span>name</span>
@@ -27,10 +28,10 @@
                                         <span v-if="isEditing == false">{{departmentToBeManaged.name}}</span>
                                         <span v-else>
                                             <b-form-input
-                                                id="input-1"
-                                                v-model="tempDepartment.name"
-                                                type="text"
-                                                placeholder="Company state"
+                                                    id="input-1"
+                                                    v-model="tempDepartment.name"
+                                                    type="text"
+                                                    placeholder="Company state"
                                             ></b-form-input>
                                             <div class="invalid-feedback">
                                                 <span v-if="errors.name">{{errors.name[0]}}</span>
@@ -58,10 +59,11 @@
                                         <span>{{departmentToBeManaged.user_count}}</span>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </b-col>
-                    <b-col md="2"></b-col>
+                    <b-col md="4"></b-col>
                 </b-row>
                 <b-row class="padding-row-top padding-row-bottom">
                     <b-col md="12">
@@ -80,10 +82,31 @@
                 <b-row>
                     <b-col md="12">
                         <b-button size="sm" variant="notify-blue">employee management</b-button>
-                        <b-button size="sm" variant="danger">delete department</b-button>
+                        <b-button size="sm" variant="danger" @click="requestDelete">delete department</b-button>
                     </b-col>
                 </b-row>
+                <div v-if="deleteIniated == true">
+                    <b-row class="padding-row-top">
+                        <b-col md="12" class="text-center">
+                            <h5>Are you sure you want to delete this department?</h5>
+                            <small>If you continue deleting this department there is no undoing this.</small>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col md="2">
+                        </b-col>
+                        <b-col md="8" class="text-center">
+                            <b-button size="sm" variant="danger" @click="cancelDelete">cancel</b-button>
+                            <b-button size="sm" variant="success" @click="confirmDelete">delete</b-button>
+                        </b-col>
+                        <b-col md="2">
+                        </b-col>
+                    </b-row>
+                </div>
             </div>
+            <template v-bind:slot="modal-footer">
+
+            </template>
         </b-modal>
     </div>
 </template>
@@ -99,7 +122,8 @@
         data() {
             return {
                 isEditing:false,
-                errors:[]
+                errors:[],
+                deleteIniated:false
             };
         },
 
@@ -109,6 +133,15 @@
             // }.bind(this),1500);
         },
         methods: {
+            requestDelete(){
+                this.deleteIniated = !this.deleteIniated;
+            },
+            cancelDelete(){
+                this.deleteIniated = !this.deleteIniated;
+            },
+            confirmDelete(){
+
+            },
             startEditing(){
                 this.isEditing = !this.isEditing;
                 this._beforeEditingCache = this.departmentToBeManaged;
