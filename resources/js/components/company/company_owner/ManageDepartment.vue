@@ -116,6 +116,8 @@
                 this.tempDepartment = this.departmentToBeManaged;
             },
             cancelEditing(){
+
+                this.errors = [];
                 this.isEditing = !this.isEditing;
                 Object.assign(this.departmentToBeManaged, this._beforeEditingCache);
                 this._beforeEditingCache = null;

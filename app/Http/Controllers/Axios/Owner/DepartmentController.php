@@ -65,6 +65,14 @@ class DepartmentController extends Controller
     public function edit(Request $request,Department $department)
     {
 
+        $messages = [
+            'manager.required' => 'Please select a manager.'
+        ];
+        $validatedData = $request->validate([
+            'name' => 'required|min:3|max:15',
+            'manager' => 'required'
+        ],$messages);
+
         $department->name = $request->name;
         $department->manager_user_id = $request['manager']['id'];
         $department->update();
