@@ -18,6 +18,8 @@
             post_department: '{{url('axios/owner/department/create')}}',
             edit_company: '{{url('axios/owner/company/{0}/update')}}',
             get_employees_for_company: '{{url('axios/owner/company/{0}/employees/get')}}',
+            detach_employee: '{{url('axios/owner/company/{0}/department/{1}/employees/detach')}}',
+            attach_employee: '{{url('axios/owner/company/{0}/department/{1}/employees/attach')}}',
         };
     </script>
 @endsection

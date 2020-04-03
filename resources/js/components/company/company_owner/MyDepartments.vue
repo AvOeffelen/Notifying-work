@@ -38,19 +38,41 @@
                                 <td>#</td>
                                 <td>name</td>
                                 <td>manager</td>
-                                <td># of employees</td>
+                                <td class="employee-count">employee count</td>
                                 <td></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(department,index) in departments">
                                 <td># {{index + 1 }}</td>
-                                <td>{{department.name}}</td>
-                                <td>{{department.manager.name}}</td>
-                                <td>{{department.user_count}}</td>
+                                <td>
+                                    <span v-if="isEditing == true && isEditingIndex == index">
+                                        <b-form-input
+                                            id="input-1"
+                                            v-model="department.name"
+                                            type="text"
+                                        ></b-form-input>
+                                    </span>
+                                    <span v-else>
+                                        {{department.name}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="isEditing == true && isEditingIndex == index">
+                                        <multiselect v-model="department.manager" :options="employees"  placeholder="Select employee as manager" :preselect-first="true" label="name" track-by="name"></multiselect>
+                                    </span>
+                                    <span v-else>
+                                    {{department.manager.name}}
+                                    </span>
+                                </td>
+                                <td class="employee-count">{{department.user_count}}</td>
                                 <td class="text-right">
+                                    <span v-if="isEditing == true && isEditingIndex == index" >
+                                        <b-button size="sm" variant="danger" @click="cancelEditing(department)">cancel</b-button>
+                                        <b-button size="sm" variant="success" @click="finishEditing(department)">save</b-button>
+                                    </span>
                                     <b-dropdown size="sm" id="dropdown-1" text="actions" variant="notify-blue">
-                                        <b-dropdown-item v-on:click="manageDepartment(department)">manage department &nbsp<i class="fa fa-question-circle" :id="`manage-my-department-` + index"></i></b-dropdown-item>
+                                        <b-dropdown-item v-on:click="startEditing(department,index)">edit</b-dropdown-item>
                                         <b-dropdown-item>show employees</b-dropdown-item>
                                         <b-dropdown-item variant="danger" v-on:click="showConfirmModal(department.id,index)">remove department</b-dropdown-item>
                                     </b-dropdown>
@@ -70,12 +92,12 @@
                 </div>
             </template>
         </b-card>
-        <b-modal title="Are you sure?" id="confirmModalTest" v-model="confirmModal">
-            <p>Are you sure? {{selectedId}} , {{selectedIndex}}</p>
+        <b-modal title="Delete department" id="confirmModalTest" v-model="confirmModal">
+            <p>Are you sure you want to delete this department? This will unbind all its employees from this department.</p>
             <template v-slot:modal-footer>
                 <div class="text-right">
-                    <b-button v-on:click="this.confirmModal === false" variant="danger" size="sm">cancel</b-button>
-                    <b-button v-on:click="confirmDelete(selectedId,selectedIndex)" variant="success" size="sm">delete</b-button>
+                    <b-button v-on:click="closeConfirmModal" variant="danger" size="sm">cancel</b-button>
+                    <b-button v-on:click="confirmDelete(selectedId,selectedIndex)" variant="success" size="sm">i am sure</b-button>
                 </div>
             </template>
         </b-modal>
@@ -119,15 +141,12 @@
                 </div>
             </template>
         </b-modal>
-        <manage-department :manageMyDepartmentModal="openManageModal" :employees="employees" :departmentToBeManaged="departmentToBeManaged"></manage-department>
     </div>
 </template>
 
 <script>
-    import ManageDepartment from "./ManageDepartment";
     export default {
         name: "MyDepartments",
-        components: {ManageDepartment},
         props: [
             'company'
         ],
@@ -145,8 +164,9 @@
                     name:'',
                 },
                 errors:[],
-                openManageModal:false,
-                departmentToBeManaged:'',
+                isEditing:false,
+                isEditingIndex:null,
+                editedDepartment:null
             };
         },
         created() {
@@ -154,8 +174,38 @@
             //     this.getNotes();
             // }.bind(this),1500);
             this.fetchDepartments();
+            this.fetchAllEmployees();
         },
         methods: {
+            startEditing(department,index){
+                this.isEditing = !this.isEditing;
+                this.isEditingIndex = index;
+                this._beforeEditingCache = department;
+                this._beforeEditingCache = Object.assign({},department);
+                // this.editedUser = department;
+            },
+            cancelEditing(department){
+                this.isEditing = !this.isEditing;
+                this.isEditingIndex = null;
+
+                Object.assign(department, this._beforeEditingCache);
+                this._beforeEditingCache = null;
+            },
+            finishEditing(department){
+                let url = variables.edit_department.format(department.id);
+                axios.put(url,department)
+                    .then(response => {
+                        this.isEditing = !this.isEditing;
+                        this._beforeEditingCache = null;
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        // if (error.response.status === 422) {
+                        //     this.errors = error.response.data.errors;
+                        // }
+                    });
+            },
             fetchAllEmployees(){
                 let url = variables.get_employees_for_company.format(this.company.id);
                 console.log("url",url);
@@ -169,11 +219,6 @@
                         //     this.errors = error.response.data.errors;
                         // }
                     });
-            },
-            manageDepartment(test){
-                this.fetchAllEmployees();
-                this.openManageModal = !this.openManageModal;
-                this.departmentToBeManaged = test;
             },
             createDepartment(){
                 let url = variables.post_department;
@@ -192,27 +237,6 @@
             openCreateDepartmentModal(){
                 this.createModal = !this.createModal;
                 this.fetchAllEmployees();
-            },
-            finishEditing(departmentEdit,department){
-                let url = variables.edit_department.format(departmentEdit.id);
-                axios.put(url)
-                    .then(response => {
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        // if (error.response.status === 422) {
-                        //     this.errors = error.response.data.errors;
-                        // }
-                    });
-            },
-            cancelEditing(){
-                this.isEditing = !this.isEditing;
-            },
-            startEditing(department){
-              this.isEditing = !this.isEditing;
-
-              this.departmentEdit.name = department.name;
-              this.departmentEdit.id = department.id;
             },
             fetchDepartments(){
                 let url = variables.get_department.format(this.company.id);
@@ -235,6 +259,11 @@
                 this.selectedId = id;
                 this.selectedIndex = index;
             },
+            closeConfirmModal(){
+                this.confirmModal = !this.confirmModal;
+                this.selectedId = null;
+                this.selectedIndex = null;
+            },
             confirmDelete(id,index){
                 let url = variables.delete_department.format(id);
                 axios.delete(url)
@@ -255,12 +284,25 @@
     }
 </script>
 
-<style>
+<style scoped>
     .padding-top-15{
         padding-top: 15px;
     }
 
-    .multiselect__option--selected .multiselect__option--highlight{
-        background-color: $Notify-blue;
+    [v-cloak] {
+        display: none;
+    }
+    .edit {
+        display: none;
+    }
+    .editing .edit {
+        display: block
+    }
+    .editing .view {
+        display: none;
+    }
+
+    .employee-count{
+        width: 135px;
     }
 </style>

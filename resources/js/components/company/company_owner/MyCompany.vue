@@ -210,6 +210,7 @@
         <b-row>
             <b-col md="12">
                 <my-departments :company="this.company"></my-departments>
+                <department-employee-management :company="this.company"></department-employee-management>
             </b-col>
         </b-row>
     </div>
@@ -217,9 +218,10 @@
 
 <script>
     import MyDepartments from "./MyDepartments";
+    import DepartmentEmployeeManagement from "./DepartmentEmployeeManagement";
     export default {
         name: "MyCompany",
-        components: {MyDepartments},
+        components: {DepartmentEmployeeManagement, MyDepartments},
         props: [
             'user',
             'company'

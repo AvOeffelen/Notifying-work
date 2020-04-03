@@ -45,4 +45,8 @@ Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner'], function
     Route::delete('/department/{department}/delete','DepartmentController@delete')->name('axios.delete.department');
     Route::put('department/{department}/edit','DepartmentController@edit')->name('axios.edit.department');
     Route::post('department/create','DepartmentController@create')->name('axios.create.department');
+
+
+    Route::delete('/company/{company}/department/{department}/employees/detach','DepartmentController@detachEmployeeFromDepartment')->name('axios.department.detach.employees');
+    Route::delete('/company/{company}/department/{department}/employees/attach','DepartmentController@attachEmployeesToDepartment')->name('axios.department.attach.employees');
 });

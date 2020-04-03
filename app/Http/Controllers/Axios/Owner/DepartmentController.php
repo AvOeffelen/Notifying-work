@@ -64,8 +64,7 @@ class DepartmentController extends Controller
 
     public function edit(Request $request,Department $department)
     {
-
-        $messages = [
+                $messages = [
             'manager.required' => 'Please select a manager.'
         ];
         $validatedData = $request->validate([
@@ -80,6 +79,14 @@ class DepartmentController extends Controller
         return $department->toJson();
     }
 
+    public function detachEmployeeFromDepartment(Request $request,Company $company, Department $department)
+    {
+        $ids = $request->employees;
+
+//        $users = User::findMany($ids);
+
+        $department->User()->detach($ids);
+    }
     private function storeUserToDepartment($user,$department){
 
     }
