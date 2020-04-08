@@ -260,7 +260,6 @@
             },
             finishEdit(){
                 this.company = this.tempCompany;
-                console.log("new",this.company);
                 let url = variables.edit_company.format(this.company.id);
                 axios.put(url,this.tempCompany)
                     .then(response => {

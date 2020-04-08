@@ -31,6 +31,11 @@ class DepartmentController extends Controller
         return;
     }
 
+    public function massDelete(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function create(Request $request)
     {
 
@@ -86,6 +91,16 @@ class DepartmentController extends Controller
 //        $users = User::findMany($ids);
 
         $department->User()->detach($ids);
+    }
+
+    public function attachEmployeesToDepartment(Request $request,Company $company,Department $department)
+    {
+
+        foreach($request->params['selectedEmployees'] as $index => $newEmployee){
+            $department->User()->attach($newEmployee['id']);
+        }
+
+        return $department->toJson();
     }
     private function storeUserToDepartment($user,$department){
 

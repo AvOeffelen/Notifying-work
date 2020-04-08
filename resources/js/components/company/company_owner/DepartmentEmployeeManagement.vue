@@ -74,26 +74,20 @@
                         <thead>
                         <tr>
                             <th>
-                                <span v-if="MultiDeleteToggle == false">
-                                </span>
-                                <label class="form-checkbox" v-else>
-                                    <input type="checkbox" v-model="selectAll" @click="select">
-                                    <i class="form-icon"></i>
-                                </label>
+                                <span></span>
                             </th>
                             <th>#</th>
                             <th>name</th>
                             <th>email</th>
                             <th>phone</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(employee,index) in selectedDepartment.user">
                                 <td class="table-width-60">
-                                    <i class="fa fa-minus-circle 2x deleteEmployee" v-if="MultiDeleteToggle == false"  @click="selectSingleEmployee(employee.id)"></i>
+                                    <i class="fa fa-minus-circle 2x deleteEmployee" v-if="MultiDeleteToggle == false"  @click="detachSingleEmployee(employee)"></i>
                                     <label class="form-checkbox" v-else>
-                                        <input type="checkbox" class="form-checkbox disabled" :value="employee.id" v-model="selectedIds" disabled>
+                                        <input type="checkbox" class="form-checkbox disabled" :value="employee.id" v-model="selectedIds">
                                         <i class="form-icon"></i>
                                     </label>
                                 </td>
@@ -101,11 +95,6 @@
                                 <td class="table-width-auto">{{employee.name}}</td>
                                 <td class="table-width-auto">{{employee.email}}</td>
                                 <td class="table-width-auto">{{employee.country_code}} {{employee.phonenumber}}</td>
-                                <td class="table-width-40">
-                                    <b-dropdown size="sm" id="dropdown-1" text="actions" variant="notify-blue">
-                                        <b-dropdown-item>Action</b-dropdown-item>
-                                    </b-dropdown>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -118,7 +107,7 @@
                 </div>
             </template>
         </b-card>
-        <b-modal v-model="initConfirmDeleteModal">
+        <b-modal v-model="initConfirmDeleteModal" size="md">
             <b-row>
                 <b-col align-self="center">
                     <b-row>
@@ -126,17 +115,13 @@
                             <div class="text-center">
                                 <b-row>
                                     <b-col>
-                                        <h4>You have selected {{this.selected.length}} employees.</h4>
+                                        <h4 v-if="this.selected.length > 1">You have selected {{this.selected.length}} employees to detach from department.</h4>
+                                        <h4 v-else>You have selected {{this.selected.length}} employee to detach from department.</h4>
                                     </b-col>
                                 </b-row>
                                 <b-row>
                                     <b-col>
-                                        <small>You accidentally added an employee you don't want to remove? You can still delete these employee from the list here.</small>
-                                    </b-col>
-                                </b-row>
-                                <b-row v-if="this.selected.length == 1">
-                                    <b-col>
-                                        <small>You are trying to detach</small>
+                                        <small>text here TBD</small>
                                     </b-col>
                                 </b-row>
                                 <b-row>
@@ -151,12 +136,16 @@
                         <b-col>
                             <div class="text-center">
                                 <b-collapse id="collapse-employee-list" v-model="employeeDeletionListCollapse">
+                                    <h5 v-if="this.selected.length > 1">selected employees: </h5>
+                                    <h5 v-else>selected employee: </h5>
                                     <table class="table table-borderless">
                                         <tbody>
                                         <tr v-for="(employee,index) in this.selected">
                                             <td>{{employee.name}}</td>
                                             <td class="text-right">
-                                                <b-button size="sm" variant="success" @click="removeFromMassDeletionList(employee.id,index)">remove from list</b-button>
+                                                <b-button v-if="selected.length > 1" size="sm" variant="success" @click="removeFromMassDeletionList(employee.id,index)">remove from list</b-button>
+                                                <b-button v-else size="sm" variant="success" @click="removeFromMassDeletionList(employee.id,index)" disabled>remove from list</b-button>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -212,6 +201,22 @@
                 <b-button size="sm" variant="success" @click="confirmAttachEmployees">attach</b-button>
             </template>
         </b-modal>
+        <b-modal v-model="detachSingleEmployeeModal"  v-if="this.selectedDepartment && this.employee !== null" size="md">
+            <b-row>
+                <b-col class="text-center">
+                    <h4>Detaching employee from <i>{{this.selectedDepartment.name}}</i></h4>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <p>You're trying to detach <strong><i>{{this.employee.name}}</i></strong> from the department. Are you sure?</p>
+                </b-col>
+            </b-row>
+            <template v-slot:modal-footer>
+                <b-button variant="primary" size="sm" @click="cancelDetachSingleEmployee">cancel</b-button>
+                <b-button variant="success" size="sm" @click="confirmDetachEmployee">detach</b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -236,6 +241,9 @@
                 assignEmployeeModal:false,
                 employees:null,
                 selectedEmployees:[],
+                detachSingleEmployeeModal:false,
+                employee:null,
+
             };
         },
         created() {
@@ -243,17 +251,44 @@
             this.fetchEmployees();
         },
         methods: {
-            fixArray(){
-                console.log("testingftw");
-                this.selectedEmployeesTrimmed = this.selectedEmployees;
+            cancelDetachSingleEmployee(){
+              this.employee = null;
+              this.detachSingleEmployeeModal = !this.detachSingleEmployeeModal;
+            },
+            confirmDetachEmployee(){
+                let url = variables.detach_employee.format(this.company.id,this.selectedDepartment.id);
+                axios.delete(url,{
+                    params:{
+                        employees: this.employee.id
+                    }
+                })
+                    .then(response => {
+                        this.detachSingleEmployeeModal = !this.detachSingleEmployeeModal;
+                            for(let e in this.selectedDepartment.user){
+                                if(this.employee.id == this.selectedDepartment.user[e].id){
+                                    this.selectedDepartment.user.splice(e,1);
+                                }
+                            }
+                        this.$toast.success("Sucesfully detached employee(s) from department.");
+                    })
+                    .catch(error => {
+                        // if (error.response.status === 422) {
+                        //     this.errors = error.response.data.errors;
+                        // }
+                    });
+            },
+            detachSingleEmployee(employee){
+                this.detachSingleEmployeeModal = !this.detachSingleEmployeeModal;
+                this.employee = employee;
             },
             cancelAttachEmployees(){
               this.selectedEmployees = [];
-                this.assignEmployeeModal = !this.assignEmployeeModal;
+              this.assignEmployeeModal = !this.assignEmployeeModal;
             },
             initAssignEmployeeModal(){
+                this.selectedEmployees = [];
                 this.tempFunctionname();
-              this.assignEmployeeModal = !this.assignEmployeeModal;
+                this.assignEmployeeModal = !this.assignEmployeeModal;
             },
             tempFunctionname(){
                 for(let i in this.employees){
@@ -275,32 +310,35 @@
             },
             confirmAttachEmployees(){
                 this.filterEmployeesAlreadyInDepartment();
-                console.log("done filtering, result: ",this.selectedEmployees);
-                let url = variables.attach_employee.format(this.company.id,this.selectedEmployees.id);
-                axios.post(url,{
+                if(this.selectedEmployees.length == 0 ){
+                    this.tempFunctionname();
+                } else {
+                    this.assignEmployeeModal = false;
+                    let url = variables.attach_employee.format(this.company.id,this.selectedDepartment.id);
+                    axios.post(url,{
                         params:{
-                            selectedEmployees:this.selectedEmployeesTrimmed
+                            selectedEmployees : this.selectedEmployees,
                         }
-                    }
-
-                ).then(response => {
-                    this.assignEmployeeModal = !this.assignEmployeeModal;
-                    // this.isBusy = false;
-                        // this.departments = response.data;
+                    }).then(response => {
+                        for(let x in this.selectedEmployees){
+                            this.selectedDepartment.user.push(this.selectedEmployees[x]);
+                        }
+                        this.$toast.success("Succesfully attached employees to department.");
                     })
-                    .catch(error => {
-                        console.log(error);
-                        // if (error.response.status === 422) {
-                        //     this.errors = error.response.data.errors;
-                        // }
-                    });
+                        .catch(error => {
+                            // if (error.response.status === 422) {
+                            //     this.errors = error.response.data.errors;
+                            // }
+                        });
+                }
+
             },
             cancelEdit(company) {
                 this.isEditing = !this.isEditing;
                 Object.assign(company, this._beforeEditingCache);
                 this._beforeEditingCache = null;
             },
-            select() {
+            selectAllFunction() {
                 this.selected = [];
                 this.selectedIds = [];
 
@@ -320,7 +358,7 @@
             toggleMassDeletion(){
                 if(this.MultiDeleteToggle == true){
                     this.selectAll = true;
-                    this.select();
+                    this.selectAllFunction();
                 } else {
                     this.selected = [];
                     this.selectedIds = [];
@@ -330,6 +368,8 @@
             departmentChange(){
                 if(this.MultiDeleteToggle == true){
                     this.selectAll = true;
+                    this.selected = [];
+                    this.selectedIds = [];
                     this.select();
                 } else {
                     this.selected = [];
@@ -345,7 +385,18 @@
 
                 this.initConfirmDeleteModal = !this.initConfirmDeleteModal;
             },
+            updateSelected(){
+                this.selected = [];
+                for(let id in this.selectedIds){
+                    for(let e in this.selectedDepartment.user){
+                        if(this.selectedIds[id] == this.selectedDepartment.user[e].id){
+                            this.selected.push(this.selectedDepartment.user[e]);
+                        }
+                    }
+                }
+            },
             openConfirmDeleteModal(){
+                this.updateSelected();
                 this.initConfirmDeleteModal = !this.initConfirmDeleteModal;
             },
             confirmMassDelete(){
@@ -354,15 +405,18 @@
                     params:{
                         employees: this.selectedIds
                     }
-                })
-                    .then(response => {
+                }).then(response => {
                         this.initConfirmDeleteModal = !this.initConfirmDeleteModal;
-                        //TODO:: Splice detached employees here.
-
+                        for(let id in this.selectedIds){
+                            for(let e in this.selectedDepartment.user){
+                                if(this.selectedIds[id] == this.selectedDepartment.user[e].id){
+                                    this.selectedDepartment.user.splice(e,1);
+                                }
+                            }
+                        }
                         this.$toast.success("Sucesfully detached employee(s) from department.");
                     })
                     .catch(error => {
-                        console.log(error);
                         // if (error.response.status === 422) {
                         //     this.errors = error.response.data.errors;
                         // }
@@ -375,7 +429,6 @@
                         this.employees = response.data;
                     })
                     .catch(error => {
-                        console.log(error);
                         // if (error.response.status === 422) {
                         //     this.errors = error.response.data.errors;
                         // }
@@ -389,7 +442,6 @@
                         this.departments = response.data;
                     })
                     .catch(error => {
-                        console.log(error);
                         // if (error.response.status === 422) {
                         //     this.errors = error.response.data.errors;
                         // }
