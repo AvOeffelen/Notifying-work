@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CompanyController extends Controller
+class PushNotificationController extends Controller
 {
     public function index()
     {
-
         if(auth()->user()->isOwner()){
-            return response()->view('company.company_owner.index');
+            return response()->view('notification.push.company_owner.index');
         }
 
+        //todo:: create regular index and return that here.
         return response()->view('company.index');
     }
 }

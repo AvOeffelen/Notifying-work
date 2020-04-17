@@ -11,7 +11,7 @@
                 <span>Notifications</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                <a class="dropdown-item" href="#">Push Notification</a>
+                <a class="dropdown-item" href="{{route('notification.push')}}">Push Notification</a>
                 <button class="dropdown-item" href="#" disabled>Email</button>
                 <button class="dropdown-item" href="#" disabled>SMS</button>
                 <button class="dropdown-item" href="#" disabled>WhatsApp</button>
@@ -28,21 +28,20 @@
             </div>
         </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{route('employees')}}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Employees</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('my.company')}}">
+            <i class="fas fa-fw fa-building"></i>
+            <span>My company</span></a>
+
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-cogs"></i>
             <span>Settings</span></a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Employees</span></a>
-    </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('my.company')}}">
-                <i class="fas fa-fw fa-building"></i>
-                <span>My company</span></a>
-
-        </li>
 
 </ul>

@@ -13,7 +13,6 @@ class DepartmentController extends Controller
 {
     public function getAllDepartmentsForCompany(Company $company)
     {
-
         $departments = Department::where('company_id',$company->id)->with('Manager')->With('User')->withCount('User')->get();
 
         return $departments->toJson();
@@ -31,15 +30,26 @@ class DepartmentController extends Controller
         return;
     }
 
-    public function massDelete(Request $request)
+    public function massDeleteDepartment(Request $request,Company $company)
     {
-        dd($request->all());
+        $idArray = explode(",",$request->Ids);
+
+        $departments = Department::whereIn('id',$idArray)->get();
+
+        foreach($departments as $index => $department){
+            try{
+                $department->User()->detach();
+                $department->delete();
+            } catch (\Exception $e){
+                $e->getMessage();
+            }
+        }
+
+        return $this->getAllDepartmentsForCompany($company);
     }
 
     public function create(Request $request)
     {
-
-
         $messages = [
             'manager.required' => 'Please select a manager.'
         ];
@@ -50,7 +60,13 @@ class DepartmentController extends Controller
 
         $department = $this->store($request->toArray());
 
-        $department->User()->attach($request['manager']['id']);
+        if(count($request['employees']) >= 1){
+            foreach ($request['employees'] as $index => $user){
+                $department->User()->attach($user['id']);
+            }
+        } else {
+            $department->User()->attach($request['manager']['id']);
+        }
 
        $newDepartment = Department::with('Manager')->With('User')->withCount('User')->findOrFail($department->id);
 
@@ -69,7 +85,8 @@ class DepartmentController extends Controller
 
     public function edit(Request $request,Department $department)
     {
-                $messages = [
+
+        $messages = [
             'manager.required' => 'Please select a manager.'
         ];
         $validatedData = $request->validate([
@@ -77,9 +94,18 @@ class DepartmentController extends Controller
             'manager' => 'required'
         ],$messages);
 
+        //Detaching old manager from department. This can be changed later.
+        $department->User()->detach($department->manager_user_id);
+
+
         $department->name = $request->name;
         $department->manager_user_id = $request['manager']['id'];
         $department->update();
+
+        $departmentEmployees = $department->User()->get();
+        if(!$departmentEmployees->contains('id',$request['manager']['id'])){
+            $department->User()->attach($request['manager']['id']);
+        }
 
         return $department->toJson();
     }
@@ -95,14 +121,10 @@ class DepartmentController extends Controller
 
     public function attachEmployeesToDepartment(Request $request,Company $company,Department $department)
     {
-
         foreach($request->params['selectedEmployees'] as $index => $newEmployee){
             $department->User()->attach($newEmployee['id']);
         }
 
         return $department->toJson();
-    }
-    private function storeUserToDepartment($user,$department){
-
     }
 }

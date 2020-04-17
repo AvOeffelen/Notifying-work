@@ -12,8 +12,11 @@ window.Vue = require('vue');
 
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
 import { createPopper } from '@popperjs/core';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import Multiselect from 'vue-multiselect'
+import ToggleButton from 'vue-js-toggle-button';
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,13 +29,23 @@ import Multiselect from 'vue-multiselect'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+//My components.
 Vue.component('my-company',require('./components/company/company_owner/MyCompany').default);
+Vue.component('employee-overview',require('./components/employees/company_owner/EmployeeOverview').default);
+Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('push-notification-index',require('./components/notification/push/company_owner/PushNotificationIndex').default);
+
+const toastOptions = {
+    timeout: 4500,
+    position: "top-right"
+};
 
 
 // register globally
 Vue.component('multiselect', Multiselect);
+Vue.use(Toast, toastOptions);
+Vue.use(ToggleButton);
 Vue.use(createPopper);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
