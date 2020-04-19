@@ -8,6 +8,16 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                    @if (isset($errors) && count($errors))
+
+                        There were {{count($errors->all())}} Error(s)
+                        <ul class="alert-warning">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }} </li>
+                            @endforeach
+                        </ul>
+
+                    @endif
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -19,6 +29,19 @@
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Lastname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="name" autofocus>
+
+                                @error('lastname')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -38,6 +61,32 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Phonenumber') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('phonenumber') is-invalid @enderror" name="phonenumber" value="{{ old('phonenumber') }}" required autocomplete="name" autofocus>
+
+                                @error('phonenumber')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Country code') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('countryCode') is-invalid @enderror" name="countryCode" value="{{ old('countryCode') }}" required autocomplete="name" autofocus>
+
+                                @error('countryCode')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
@@ -52,7 +101,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
@@ -62,7 +110,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-4 text-right">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>

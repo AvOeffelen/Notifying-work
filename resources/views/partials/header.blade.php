@@ -15,7 +15,7 @@
             <a href="#">Support</a>
           </li>
           <li>
-            <a href="#" class="btn btn--ghost-primary">Contact</a>
+            <a href="{{route('get.started.index')}}" class="btn btn--ghost-primary">Get started</a>
           </li>
       </ul>
     </nav>

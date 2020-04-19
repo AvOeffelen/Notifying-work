@@ -1,5 +1,6 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
@@ -14,6 +15,9 @@
 @import 'theme/features';
 @import 'theme/testimonials';
 
+//Headers
+@import "dashboard/ds";
+@import "theme/header";
 
 //@tailwind base;
 //
