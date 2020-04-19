@@ -35,6 +35,7 @@ Vue.component('my-company',require('./components/company/company_owner/MyCompany
 Vue.component('employee-overview',require('./components/employees/company_owner/EmployeeOverview').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('push-notification-index',require('./components/notification/push/company_owner/PushNotificationIndex').default);
+Vue.component('navigation',require('./components/partials/dashboard/Navigation').default);
 
 const toastOptions = {
     timeout: 4500,
@@ -71,11 +72,11 @@ const app = new Vue({
     "use strict"; // Start of use strict
 
     // Toggle the side navigation
-    $("#sidebarToggle").on('click', function(e) {
-        e.preventDefault();
-        $("body").toggleClass("sidebar-toggled");
-        $(".sidebar").toggleClass("toggled");
-    });
+    // $("#sidebarToggle").on('click', function(e) {
+    //     e.preventDefault();
+    //     $("body").toggleClass("sidebar-toggled");
+    //     $(".sidebar").toggleClass("toggled");
+    // });
 
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
     $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {

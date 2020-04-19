@@ -33,7 +33,17 @@ class VariablePush extends Notification
      */
     public function via($notifiable)
     {
-        return [WebPushChannel::class];
+        return [WebPushChannel::class,'database'];
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'message' => $this->notification['message'],
+            'title' => $this->notification['title'],
+            'action.title' => $this->notification['action']['title'],
+            'action.link' => $this->notification['action']['link'],
+        ];
     }
 
     public function toWebPush($notifiable, $notification)
