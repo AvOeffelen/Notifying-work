@@ -83,11 +83,15 @@ class PushNotificationController extends Controller
     private function sendNotificationToEmployees(array $notification, array $ids)
     {
         $employees = User::whereIn('id',$ids)->get();
-        try {
-            Notification::send($employees, new VariablePush($notification));
-        } catch (\Exception $e) {
-            $e->getMessage();
-            $e->getLine();
+        $when = now();
+        foreach($employees as $employee){
+            $employee->notify(new VariablePush($notification));
         }
+//        try {
+//            Notification::send($employees, new VariablePush($notification));
+//        } catch (\Exception $e) {
+//            $e->getMessage();
+//            $e->getLine();
+//        }
     }
 }
