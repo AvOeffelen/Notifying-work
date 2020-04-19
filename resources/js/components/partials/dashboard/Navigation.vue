@@ -33,7 +33,7 @@
                 <li class="nav-item dropdown text-white">
                      <span class="badge badge-pill badge-danger"
                             style="float:right;margin-bottom:-10px;margin-right: 25px; z-index: 20;">
-                         1
+                        {{this.unreadNotificationsCounter}}
                      </span>
                     <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                        data-toggle="dropdown"
@@ -45,28 +45,42 @@
                         <!--                        @endforeach-->
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="head text-light bg-light-blue">
-                                <div class="row">
-                                    <div class="col-lg-12 col-sm-12 col-12">
-                                        <span>Notifications (3)</span>
-                                        <a href="" class="float-right text-light">Mark all as read</a>
-                                    </div>
-                                </div>
+                                <b-row>
+                                    <b-col>
+                                        <span>Notifications ({{this.unreadNotificationsCounter}})</span>
+                                    </b-col>
+                                    <b-col>
+                                        <div class="text-right">
+                                            <a href="" class="text-right text-light">Mark all as read</a>
+                                        </div>
+                                    </b-col>
+                                </b-row>
                             </li>
-                            <li class="notification-box">
+                            <li v-for="(notification,index) in notifications" :key="index" class="notification-box">
                                 <b-row>
                                     <b-col md="8" lg="8" sm="8">
-                                        <div  class="padding-left-15">
-                                            <h6>Lorem ipsum dolor sit amet, consectetur</h6>
-                                            <span>subtext</span>
-                                            <small>date</small>
+                                        <div class="padding-left-15">
+                                            <b-row>
+                                                <h6 class="font-weight-bolder padding-left-15">{{notification.data.title}}</h6>
+                                            </b-row>
+                                            <b-row>
+                                                <span class="padding-left-15">{{ notification.data.message | truncate(35, '...') }}</span>
+                                            </b-row>
+                                            <b-row>
+<!--                                                TODO::Format this to wished upon date.-->
+                                                <small class="padding-left-15">{{ notification.created_at | moment("DD-MM-YYYY HH:MM") }}</small>
+                                            </b-row>
                                         </div>
-
                                     </b-col>
-                                    <b-col>
-                                        <i class="fa fa-eye-slash"></i>
+                                    <b-col class="notification_buttons">
+                                        <div class="notification_action_button">
+                                            <i class="fa fa-eye-slash"></i>
+                                        </div>
                                     </b-col>
-                                    <b-col>
-                                        <i class="fa fa-arrow-right"></i>
+                                    <b-col class="notification_buttons">
+                                        <div class="notification_action_button">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </div>
                                     </b-col>
                                 </b-row>
                             </li>
@@ -87,29 +101,59 @@
         name: "Navigation",
         props: [
             'user',
+            'notifications'
         ],
         data() {
-            return {};
+            return {
+                unreadNotificationsCounter:0,
+            };
         },
         created() {
-            console.log("tf", this.user);
+            console.log("tf", this.notifications);
+            this.countUnreadNotifications();
         },
         methods: {
             sideBarToggle() {
                 $("body").toggleClass("sidebar-toggled");
                 $(".sidebar").toggleClass("toggled");
+            },
+            countUnreadNotifications(){
+                for(let x in this.notifications){
+                    if(this.notifications[x].read_at == null){
+                        this.unreadNotificationsCounter++;
+                        console.log("plus one");
+                    }
+                }
             }
         }
     }
 </script>
 
 <style scoped>
+    .notification_buttons{
+        position: relative;
+    }
+
+    .notification_action_button{
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display:inline-block;
+        line-height: 50px;
+        text-align: center;
+        vertical-align: bottom;
+    }
+    .notification_action_button:hover{
+        color: #1e60b0;
+    }
     .dropdown-menu{
         top: 60px;
         right: 0px;
         left: unset;
         width: 460px;
-        box-shadow: 0px 5px 7px -1px #c1c1c1;
+        /*box-shadow: 0px 5px 7px -1px #c1c1c1;*/
         padding-bottom: 0px;
         padding: 0px;
     }
@@ -118,8 +162,8 @@
         position: absolute;
         top: -20px;
         right: 12px;
-        border:10px solid #343A40;
-        border-color: transparent transparent #343A40 transparent;
+        border:10px solid #06418a;
+        border-color: transparent transparent #06418a transparent;
     }
     .head{
         padding:5px 15px;
@@ -130,14 +174,15 @@
         border-radius: 0px 0px 3px 3px;
     }
     .notification-box{
-        padding: 10px 0px;
+        /*padding: 10px 0px;*/
+        border-bottom: 1px solid #e5e5e5;
     }
     .bg-gray{
         background-color: #eee;
     }
 
     .bg-light-blue{
-        background: #1e60b0;
+        background: #06418a;
     }
 
     .padding-left-15{

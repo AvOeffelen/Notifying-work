@@ -42,6 +42,14 @@ const toastOptions = {
     position: "top-right"
 };
 
+Vue.filter('truncate', function (text, length, suffix) {
+    if (text.length > length) {
+        return text.substring(0, length) + suffix;
+    } else {
+        return text;
+    }
+});
+
 
 // register globally
 Vue.component('multiselect', Multiselect);
@@ -50,6 +58,7 @@ Vue.use(ToggleButton);
 Vue.use(createPopper);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(require('vue-moment'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
