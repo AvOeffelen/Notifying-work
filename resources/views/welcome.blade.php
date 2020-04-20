@@ -12,7 +12,7 @@
         </div>
         <div class="intro-text__col">
           <div class="intro-text__image">
-            <img src="/img/notification-4.svg" alt="">
+            <img src="/assets/images/notification-4.svg" alt="">
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="feature-content__row">
           <div class="feature-content__col">
             <div class="feature-content__image">
-              <img src="/img/message-4.svg" alt="">
+              <img src="/assets/images/message-4.svg" alt="">
             </div>
           </div>
           <div class="feature-content__col">
@@ -40,7 +40,7 @@
                 <ul class="feature-content__list">
                   <li class="is-active">
                     <div>
-                      <h3><i class="far fa-paper-plane"></i>Push Notifications</h3>
+                      <h3><span class="icon"><i class="far fa-paper-plane"></i></span>Push Notifications</h3>
                       <div class="feature-content__list-label"><small>In progress</small></div>
                     </div>
                     <p>This feature is perfect if you quickly want to notify someone.</p>
@@ -157,11 +157,11 @@
         <div class="site-footer__content">
           <h3>Lorem ipsum</h3>
           <ul>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
           </ul>
         </div>
       </li>
@@ -169,11 +169,11 @@
         <div class="site-footer__content">
           <h3>Lorem ipsum</h3>
           <ul>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
           </ul>
         </div>
       </li>
@@ -181,11 +181,11 @@
         <div class="site-footer__content">
           <h3>Lorem ipsum</h3>
           <ul>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
-            <li><i class="far fa-angle-right"></i>Lorem ipsum dolor</li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
+            <li><a href="#"><span class="icon"><i class="fas fa-caret-right"></i></span>Lorem ipsum dolor</a></li>
           </ul>
         </div>
       </li>

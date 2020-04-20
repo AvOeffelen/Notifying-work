@@ -4,6 +4,7 @@
 
   &__row {
     display: flex;
+    flex-direction: column;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -11,7 +12,7 @@
 
   &__col {
     flex: 1 1 0;
-    padding: 4rem;
+    padding: 0 4rem 4rem 4rem;
     color: $color-white;
 
     h3 {
@@ -27,22 +28,58 @@
     }
 
     li {
-      i {
-        margin-right: 1rem;
+      color: $color-white;
+
+      a {
+        color: $color-white;
+        position: relative;
+        display: block;
+        opacity: 0.8;
+        transition: 200ms;
+        margin-left: 0;
+        overflow: hidden;
+
+        .icon {
+          margin-right: 1rem;
+          position: absolute;
+          left: -2rem;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+          opacity: 0;
+          transition: 200ms;
+        }
+
+        &:hover {
+          opacity: 1;
+          margin-left: 2rem;
+
+          .icon {
+            pointer-events: all;
+            opacity: 1;
+            left: 0;
+          }
+        }
       }
     }
 
+    &:first-of-type {
+      padding: 4rem;
+    }
+
     &:last-of-type {
+      padding: 4rem;
       background-color: darken($color-darkgray, 5%);
       position: relative;
       z-index: 1;
 
       &:after {
+        width: 200%;
+        left: -50%;
+        right: -50%;
         content: '';
-        width: 1000rem;
         position: absolute;
         top: 0;
-        left: 0;
         bottom: 0;
         background-color: darken($color-darkgray, 5%);
       }
@@ -53,4 +90,30 @@
     position: relative;
     z-index: 1;
   }
+}
+
+@media (min-width: 768px) {
+  .site-footer {
+    &__row {
+      flex-direction: row;
+    }
+
+    &__col {
+      padding: 4rem;
+
+      &:last-of-type:after {
+        width: 1000rem;
+        left: 0;
+        right: auto;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+
+}
+
+@media (min-width: 1420px) {
+
 }
