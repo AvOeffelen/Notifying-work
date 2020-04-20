@@ -56,28 +56,36 @@
                                     </b-col>
                                 </b-row>
                             </li>
-                            <li v-for="(notification,index) in notifications" :key="index" class="notification-box">
-                                <b-row>
-                                    <b-col md="8" lg="8" sm="8">
-                                        <div class="padding-left-15">
-                                            <b-row>
-                                                <h6 class="font-weight-bolder padding-left-15">{{notification.data.title}}</h6>
-                                            </b-row>
-                                            <b-row>
-                                                <span class="padding-left-15">{{ notification.data.message | truncate(35, '...') }}</span>
-                                            </b-row>
-                                            <b-row>
-<!--                                                TODO::Format this to wished upon date.-->
-                                                <small class="padding-left-15">{{ notification.created_at | moment("DD-MM-YYYY HH:MM") }}</small>
-                                            </b-row>
-                                        </div>
+                            <li v-for="(notification,index) in notifications"  :key="index" class="notification-box"  v-if="index < 5">
+                                <b-row  class="notification-row-margin">
+                                    <b-col md="8" lg="8" sm="8" class="">
+                                        <b-row>
+                                            <b-col  md="10" lg="10" sm="10">
+                                                <h6 class="font-weight-bolder">{{notification.data.title}}</h6>
+                                            </b-col>
+                                            <b-col  md="2" lg="2" sm="2">
+                                                <div class="notification_action_button">
+                                                    <i class="fa fa-circle unread" v-if="notification.read_at == null"></i>
+                                                </div>
+                                            </b-col>
+                                        </b-row>
+                                        <b-row>
+                                            <b-col  md="12" lg="12" sm="12">
+                                                <span>{{ notification.data.message | truncate(35, '...') }}</span>
+                                            </b-col>
+                                        </b-row>
+                                        <b-row>
+                                            <b-col  md="12" lg="12" sm="12">
+                                                <small>{{ notification.created_at | moment("DD-MM-YYYY H:mm") }}</small>
+                                            </b-col>
+                                        </b-row>
                                     </b-col>
-                                    <b-col class="notification_buttons">
-                                        <div class="notification_action_button">
+                                    <b-col md="2" lg="2" sm="2" class="notification_buttons">
+                                        <div class="notification_action_button" @click="markAsRead(notification)">
                                             <i class="fa fa-eye-slash"></i>
                                         </div>
                                     </b-col>
-                                    <b-col class="notification_buttons">
+                                    <b-col md="2" lg="2" sm="2"  class="notification_buttons">
                                         <div class="notification_action_button">
                                             <i class="fa fa-arrow-right"></i>
                                         </div>
@@ -101,27 +109,69 @@
         name: "Navigation",
         props: [
             'user',
-            'notifications'
         ],
         data() {
             return {
                 unreadNotificationsCounter:0,
+                notifications:null,
+                polling:null,
             };
         },
         created() {
-            console.log("tf", this.notifications);
-            this.countUnreadNotifications();
+            this.getNotifications();
+            this.pollData();
         },
         methods: {
+            pollData(){
+                this.polling = setInterval(() => {
+                    this.getNotifications();
+                    this.countUnreadNotifications();
+                },60000);
+            },
+            getNotifications(){
+                axios.get('/axios/notifications/push/get')
+                    .then(response => {
+                        this.notifications = response.data;
+                        this.countUnreadNotifications();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        // if (error.response.status === 422) {
+                        //     this.errors = error.response.data.errors;
+                        // }
+                    });
+            },
+            markAsRead(notification){
+                if(notification.read_at == null){
+                    axios.post('/axios/notifications/push/{0}/mark-as-read'.format(notification.id))
+                        .then(response => {
+                            this.updateMarkAsRead(response.data);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            // if (error.response.status === 422) {
+                            //     this.errors = error.response.data.errors;
+                            // }
+                        });
+                }
+            },
+            updateMarkAsRead(updatedNotification){
+                for(let x in this.notifications){
+                    if(this.notifications[x].id == updatedNotification.id){
+                        this.notifications[x] = updatedNotification;
+                        this.countUnreadNotifications();
+                    }
+                }
+            },
             sideBarToggle() {
                 $("body").toggleClass("sidebar-toggled");
                 $(".sidebar").toggleClass("toggled");
             },
             countUnreadNotifications(){
+                this.unreadNotificationsCounter = 0;
                 for(let x in this.notifications){
                     if(this.notifications[x].read_at == null){
                         this.unreadNotificationsCounter++;
-                        console.log("plus one");
                     }
                 }
             }
@@ -130,6 +180,13 @@
 </script>
 
 <style scoped>
+    .notification-row-margin{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .unread{
+        color: #1e60b0;
+    }
     .notification_buttons{
         position: relative;
     }

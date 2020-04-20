@@ -66,14 +66,19 @@ Vue.use(require('vue-moment'));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var host = window.location.host;
 
 require('./bootstrap');
 require('./utilities');
 require('./polyfills');
 require('./jquery-extension');
 
+
 const app = new Vue({
     el: '#app',
+    data:{
+      baseUrl: host
+    },
 });
 
 //Sidebar toggler here
@@ -117,5 +122,3 @@ const app = new Vue({
     });
 
 })(jQuery); // End of use strict
-
-//end sidebar toggler

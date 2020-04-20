@@ -66,3 +66,10 @@ Route::group(['prefix' => 'axios/owner/notifications', 'namespace' => 'Axios\Own
     Route::post('/push/send','PushNotificationController@sendNotification')->name('axios.notification.push.send');
 
 });
+
+Route::group(['prefix' => 'axios/notifications', 'namespace' => 'Axios'], function () {
+
+    Route::get('push/get','PushNotificationController@getNotificationsForUser')->name('axios.notification.get');
+    Route::post('push/{notification}/mark-as-read','PushNotificationController@markNotificationAsRead')->name('axios.notification.read');
+
+});
