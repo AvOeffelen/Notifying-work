@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/enable-push.js', 'public/js')
+    .js('resources/js/push/enable-push.js', 'public/js')
+    .js('resources/js/sw.js','public')
     .sass('resources/sass/dashboard/_ds.scss','public/css')
     .sass('resources/sass/app.scss', 'public/css').version();
 

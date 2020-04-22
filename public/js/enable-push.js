@@ -86,10 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/enable-push.js":
-/*!*************************************!*\
-  !*** ./resources/js/enable-push.js ***!
-  \*************************************/
+/***/ "./resources/js/push/enable-push.js":
+/*!******************************************!*\
+  !*** ./resources/js/push/enable-push.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -208,13 +208,13 @@ function urlBase64ToUint8Array(base64String) {
 /***/ }),
 
 /***/ 1:
-/*!*******************************************!*\
-  !*** multi ./resources/js/enable-push.js ***!
-  \*******************************************/
+/*!************************************************!*\
+  !*** multi ./resources/js/push/enable-push.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\Notify-work\resources\js\enable-push.js */"./resources/js/enable-push.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Notify-work\resources\js\push\enable-push.js */"./resources/js/push/enable-push.js");
 
 
 /***/ })
