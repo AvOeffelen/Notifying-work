@@ -59,6 +59,8 @@ Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner'], function
 
     Route::get('employees/get','EmployeeController@getEmployees')->name('axios.get.employees');
     Route::get('employees/unfiltered/get','EmployeeController@getUnfilteredEmployees')->name('axios.get.unfiltered.employees');
+
+    Route::get('/departments/get','DepartmentController@getDepartments')->name('axios.departments.get');
 });
 
 Route::group(['prefix' => 'axios/owner/notifications', 'namespace' => 'Axios\Owner'], function () {
@@ -71,5 +73,11 @@ Route::group(['prefix' => 'axios/notifications', 'namespace' => 'Axios'], functi
 
     Route::get('push/get','PushNotificationController@getNotificationsForUser')->name('axios.notification.get');
     Route::post('push/{notification}/mark-as-read','PushNotificationController@markNotificationAsRead')->name('axios.notification.read');
+
+});
+
+Route::group(['prefix' => 'axios/home', 'namespace' => 'Axios'], function () {
+
+    Route::get('employees/get','EmployeeController@getEmployees')->name('axios.get.employees');
 
 });

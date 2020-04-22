@@ -24,9 +24,9 @@
                         <a class="dropdown-item" href="#">Settings</a>
                         <a class="dropdown-item" href="#">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
+                        <p class="dropdown-item" @click="logOut">
                             Logout
-                        </a>
+                        </p>
                     </div>
                 </li>
                 <li class="nav-item dropdown no-arrow">
@@ -103,8 +103,6 @@
 </template>
 
 <script>
-
-
     export default {
         name: "Navigation",
         props: [
@@ -166,6 +164,12 @@
             sideBarToggle() {
                 $("body").toggleClass("sidebar-toggled");
                 $(".sidebar").toggleClass("toggled");
+            },
+            logOut(){
+                axios.post('/logout')
+                    .then(
+                        location.reload()
+                    );
             },
             countUnreadNotifications(){
                 this.unreadNotificationsCounter = 0;

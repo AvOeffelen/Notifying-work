@@ -33,7 +33,7 @@
                                         <b-popover target="notification_reciever" triggers="hover" placement="top">
                                             <template v-slot:title>Notification reciever</template>
                                             <p>Employees who has accepted the request to recieve push notifications will
-                                                recieve this notfications.
+                                                recieve this notification.
                                                 If your employee has not accepted this request they will <b>NOT</b>
                                                 recieve this notification.
                                             </p>
@@ -65,7 +65,7 @@
                                             <template v-slot:title>Select Employees</template>
                                             <p>You've selected the option employees as a reciever.
                                                 You can select (multiple) employee(s) as a reciever for this
-                                                notifcation.</p>
+                                                notification.</p>
                                         </b-popover>
                                     </label>
                                     <multiselect v-model="notification.to"
@@ -261,6 +261,7 @@
                     </template>
                 </b-card>
             </b-col>
+
         </b-row>
     </div>
 </template>

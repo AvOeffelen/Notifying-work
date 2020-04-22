@@ -14,6 +14,7 @@ import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
 import { createPopper } from '@popperjs/core';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import VueRouter from 'vue-router';
 
 import Multiselect from 'vue-multiselect'
 import ToggleButton from 'vue-js-toggle-button';
@@ -36,6 +37,8 @@ Vue.component('employee-overview',require('./components/employees/company_owner/
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('push-notification-index',require('./components/notification/push/company_owner/PushNotificationIndex').default);
 Vue.component('navigation',require('./components/partials/dashboard/Navigation').default);
+Vue.component('defaultIndex',require('./components/dashboard/DefaultIndex').default);
+Vue.component('companyOwnerIndex',require('./components/dashboard/CompanyOwnerIndex').default);
 
 const toastOptions = {
     timeout: 4500,
@@ -59,6 +62,7 @@ Vue.use(createPopper);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(require('vue-moment'));
+Vue.use(VueRouter);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -72,6 +76,7 @@ require('./bootstrap');
 require('./utilities');
 require('./polyfills');
 require('./jquery-extension');
+
 
 
 const app = new Vue({

@@ -7,10 +7,19 @@ use App\Model\Company;
 use App\Model\Department;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Array_;
 
 class DepartmentController extends Controller
 {
+
+    public function getDepartments()
+    {
+        $departments = Department::where('company_id',Auth::user()->company_id)->get();
+
+        return $departments->toJson();
+    }
+
     public function getAllDepartmentsForCompany(Company $company)
     {
         $departments = Department::where('company_id',$company->id)->with('Manager')->With('User')->withCount('User')->get();

@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->isOwner()){
+            return response()->view('dashboard.company_owner.index');
+        } elseif (auth()->user()->isDefault()){
+            return response()->view('dashboard.default.index');
+        }
         return view('home');
     }
 }
