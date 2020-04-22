@@ -26,7 +26,5 @@
             @yield('content')
         </main>
     </div>
-
-    <script src="{{ mix('js/push/enable-push.js') }}" defer></script>
 </body>
 </html>
