@@ -30,7 +30,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/_ds.css') }}" rel="stylesheet">
-    <script src="{{ mix('js/enable-push.js') }}" defer></script>
+    <script src="{{ asset('js/enable-push.js') }}" defer></script>
 
 </head>
 <body>
