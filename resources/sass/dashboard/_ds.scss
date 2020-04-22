@@ -1,0 +1,33 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+// Variables
+@import 'variables';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+
+@import "mixins.scss";
+@import "global.scss";
+@import "utilities.scss";
+@import "navbar.scss";
+@import "cards.scss";
+@import "footer.scss";
+
+
+.sidebar{
+    // #7f7d7b or the one below
+    //background-color: #7f7d7b;
+    background-color: #383b3f;
+    color: $light-blue;
+    //background-image: linear-gradient(#1e60b0 55%,#e3e1e1);
+}
+
+.sidebar .nav-link{
+    color: $light-blue;
+}

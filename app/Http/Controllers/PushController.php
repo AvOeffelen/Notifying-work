@@ -53,7 +53,7 @@ class PushController extends Controller
      */
     public function push(){
         try{
-            $user = User::find(1);
+            $user = User::where('company_id',1)->get();
             $electedUser = $user->first();
 
             $text = "New test!!!";
@@ -74,9 +74,6 @@ class PushController extends Controller
      */
     public function pushToGuest(){
         try{
-            $user = User::find(1);
-            $electedUser = $user->first();
-
             $text = "Dont forget to do this";
             Notification::send(Guest::all(), new VariablePush($text));
 

@@ -13,16 +13,16 @@ class VariablePush extends Notification
 {
     use Queueable;
 
-    protected $text;
+    protected $notification;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($text)
+    public function __construct($notification)
     {
-        $this->text = $text;
+        $this->notification = $notification;
     }
 
     /**
@@ -33,15 +33,29 @@ class VariablePush extends Notification
      */
     public function via($notifiable)
     {
-        return [WebPushChannel::class];
+        return [WebPushChannel::class,'database'];
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'message' => $this->notification['message'],
+            'title' => $this->notification['title'],
+            'action.title' => $this->notification['action']['title'],
+            'action.link' => $this->notification['action']['link'],
+        ];
     }
 
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Is this working how i want this to work?')
-            ->icon(asset('notification-images/rmnd favicon.png'))
-            ->body($this->text)
-            ->action('Go to home!', 'home');
+            ->title($this->notification['title'])
+            //TODO:: test this image
+            ->icon("http://placehold.it/100x100/1e60b0/fff?text=test")
+            ->image("http://placehold.it/100x100/1e60b0/fff?text=test")
+            ->vibrate(true)
+            ->body($this->notification['message'])
+            ->action($this->notification['action']['title'],$this->notification['action']['title'])
+            ->data($this->notification['action']['link']);
     }
 }
