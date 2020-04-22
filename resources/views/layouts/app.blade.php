@@ -27,6 +27,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    <script src="{{ mix('js/push/enable-push.js') }}" defer></script>
 </body>
 </html>
