@@ -1,6 +1,6 @@
 'use strict';
 
-
+const swReady = navigator.serviceWorker.ready;
 
 document.addEventListener('DOMContentLoaded', function () {
     initSW();
@@ -29,7 +29,6 @@ function initSW() {
             console.log(err)
         });
 }
-const swReady = navigator.serviceWorker.ready;
 
 function initPush() {
     if (!swReady) {
