@@ -13,33 +13,33 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware(['web']);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware(['web']);
 
 //make a push notification.
-Route::get('/pushUser','PushController@push')->name('push');
-Route::get('/pushGuest','PushController@pushToGuest')->name('push.guest');
+Route::get('/pushUser','PushController@push')->name('push')->middleware(['web']);
+Route::get('/pushGuest','PushController@pushToGuest')->name('push.guest')->middleware(['web']);
 
 //store a push subscriber.
-Route::post('/push','PushController@store');
+Route::post('/push','PushController@store')->middleware(['web']);
 
-Route::get('/get-started','GetStartedController@index')->name('get.started.index');
+Route::get('/get-started','GetStartedController@index')->name('get.started.index')->middleware(['web']);
 
 
-Route::get('/company','CompanyController@index')->name('my.company');
+Route::get('/company','CompanyController@index')->name('my.company')->middleware(['web']);
 
-Route::get('/employees','EmployeeController@index')->name('employees');
+Route::get('/employees','EmployeeController@index')->name('employees')->middleware(['web']);
 
-Route::get('/notifications','NotificationController@index')->name('notifications');
-Route::get('/notifications/push','PushNotificationController@index')->name('notification.push');
+Route::get('/notifications','NotificationController@index')->name('notifications')->middleware(['web']);
+Route::get('/notifications/push','PushNotificationController@index')->name('notification.push')->middleware(['web']);
 
 
 
 //TODO:: Add/create isOwner middleware
-Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner'], function () {
+Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner','middleware'=>['web']], function () {
 
 
     Route::put('company/{company}/update','CompanyController@update')->name('axios.company.update');
@@ -63,13 +63,13 @@ Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner'], function
     Route::get('/departments/get','DepartmentController@getDepartments')->name('axios.departments.get');
 });
 
-Route::group(['prefix' => 'axios/owner/notifications', 'namespace' => 'Axios\Owner'], function () {
+Route::group(['prefix' => 'axios/owner/notifications', 'namespace' => 'Axios\Owner' ,'middleware'=>['web']], function () {
 
     Route::post('/push/send','PushNotificationController@sendNotification')->name('axios.notification.push.send');
 
 });
 
-Route::group(['prefix' => 'axios/notifications', 'namespace' => 'Axios'], function () {
+Route::group(['prefix' => 'axios/notifications', 'namespace' => 'Axios' ,'middleware'=>['web']], function () {
 
     Route::get('push/get','PushNotificationController@getNotificationsForUser')->name('axios.notification.get');
     Route::post('push/{notification}/mark-as-read','PushNotificationController@markNotificationAsRead')->name('axios.notification.read');
