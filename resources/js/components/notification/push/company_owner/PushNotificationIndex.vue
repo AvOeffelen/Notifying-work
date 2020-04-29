@@ -1,6 +1,6 @@
 <template>
     <div>
-        <create-push-notification :company="company"></create-push-notification>
+        <create-push-notification :user="user"></create-push-notification>
         <saved-push-notifications></saved-push-notifications>
     </div>
 </template>
@@ -12,13 +12,13 @@ import SavedPushNotifications from "./SavedPushNotifications";
 
 export default {
         name: "PushNotificationIndex",
-    components: {SavedPushNotifications, CreatePushNotification},
-    props: [
-            'company'
+        components: {SavedPushNotifications, CreatePushNotification},
+        props:[
+            'company',
+            'user'
         ],
         data() {
             return {
-                test:null,
             };
         },
         mounted() {

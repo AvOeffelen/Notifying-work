@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Axios;
 
+use App\Helper\NotificationSender;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -22,5 +23,13 @@ class PushNotificationController extends Controller
                 return $notification;
             }
         }
+    }
+
+    public function handleNotification(Request $request)
+    {
+        $notificationHelper = new NotificationSender();
+        $notificationHelper->sendNotification($request);
+
+        return redirect()->back();
     }
 }

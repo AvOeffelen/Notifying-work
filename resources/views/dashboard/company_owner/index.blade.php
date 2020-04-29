@@ -13,6 +13,7 @@
         var variables ={
             get_employees: '{{url('axios/home/employees/get')}}',
             get_departments: '{{url('axios/owner/departments/get')}}',
+            send_pushNotification: '{{url('axios/notifications/push/send')}}',
         };
     </script>
 @endsection

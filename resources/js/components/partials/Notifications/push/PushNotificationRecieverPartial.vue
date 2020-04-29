@@ -16,21 +16,57 @@
                </multiselect>
            </b-col>
        </b-row>
-       <b-row v-else>
-           <b-col>
-               <span>Select receiver</span>
-               <multiselect v-model="receiverType"
-                            :options="receiverOptions"
-                            :preselect-first="true"
-                            :close-on-select="false"
-                            placeholder="Select receiver"
-                            :taggable="true"
-                            :multiple="true"
-                            @input="updateReceiver"
-               >
-               </multiselect>
-           </b-col>
-       </b-row>
+        <div v-else>
+            <b-row>
+                <b-col>
+                    <span>Select receiver</span>
+                    <multiselect v-model="receiverType"
+                                 :options="receiverOptions"
+                                 :preselect-first="true"
+                                 :close-on-select="true"
+                                 placeholder="Select receiver"
+                                 :taggable="true"
+                                 :multiple="false"
+                                 @input="updateReceiverType"
+                    >
+                    </multiselect>
+                </b-col>
+            </b-row>
+            <div>
+                <b-row>
+                    <b-col  v-if="receiverType == 'department'">
+                        <span>Select department</span>
+                        <multiselect v-model="selectedReceiver"
+                                     :options="departments"
+                                     :preselect-first="true"
+                                     :close-on-select="false"
+                                     placeholder="Select department"
+                                     :taggable="true"
+                                     :multiple="true"
+                                     @input="updateReceiver"
+                                     label="name"
+                                     track-by="name"
+                        >
+                        </multiselect>
+                    </b-col>
+                    <b-col  v-if="receiverType == 'employees'">
+                        <span>Select department</span>
+                        <multiselect v-model="selectedReceiver"
+                                     :options="employees"
+                                     :preselect-first="true"
+                                     :close-on-select="true"
+                                     placeholder="Select department"
+                                     :taggable="true"
+                                     :multiple="true"
+                                     @input="updateReceiver"
+                                     label="name"
+                                     track-by="name"
+                        >
+                        </multiselect>
+                    </b-col>
+                </b-row>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,6 +90,7 @@
             };
         },
         created() {
+            console.log("jemoeder",this.user);
             this.fetchEmployees();
             this.checkUserType();
         },
@@ -95,9 +132,19 @@
                 if(this.user.type == 'default'){
                     this.recieverType = 'employees';
                     this.$root.$emit('updateReceiver', this.selectedReceiver, this.recieverType);
-                } else if (this.user.type != 'default'){
-                    this.$root.$emit('updateReceiver', this.selectedReceiver, this.recieverType);
+                } else{
+                    if(this.receiverType == 'company'){
+                        this.$root.$emit('updateReceiver', this.selectedReceiver, 'company');
+                    } else if (this.receiverType == 'employees') {
+                        this.$root.$emit('updateReceiver', this.selectedReceiver, 'employees');
+                    }else if (this.receiverType == 'department') {
+                        this.$root.$emit('updateReceiver', this.selectedReceiver, 'department');
+                    }
                 }
+            },
+            updateReceiverType(){
+                this.selectedReceiver = [];
+                this.updateReceiver();
             }
         }
     }

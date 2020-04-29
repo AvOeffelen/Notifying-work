@@ -65,7 +65,7 @@ Route::group(['prefix' => 'axios/owner', 'namespace' => 'Axios\Owner','middlewar
 
 Route::group(['prefix' => 'axios/owner/notifications', 'namespace' => 'Axios\Owner' ,'middleware'=>['web']], function () {
 
-    Route::post('/push/send','PushNotificationController@sendNotification')->name('axios.notification.push.send');
+    Route::post('/push/send','PushNotificationController@handleNotification')->name('axios.notification.push.send');
 
 });
 
@@ -73,6 +73,7 @@ Route::group(['prefix' => 'axios/notifications', 'namespace' => 'Axios' ,'middle
 
     Route::get('push/get','PushNotificationController@getNotificationsForUser')->name('axios.notification.get');
     Route::post('push/{notification}/mark-as-read','PushNotificationController@markNotificationAsRead')->name('axios.notification.read');
+    Route::post('/push/send','PushNotificationController@handleNotification')->name('axios.notification.send');
 
 });
 
